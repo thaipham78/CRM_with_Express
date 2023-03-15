@@ -1,7 +1,7 @@
 # CRM_with_Express
 
 How to run this project :
-- Install and run mysql database at your local machine.
+- Install and Run mysql database at your local machine.
 
 - Clone Sourcecode.
 
