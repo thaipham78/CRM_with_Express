@@ -1,6 +1,12 @@
 # CRM_with_Express
 
-How to run this project :
+# Description :
+A simple contact management application where you can : \
+Manage companies infomation. \
+Manage contacts information. \
+Manage users.
+
+# How to run this project :
 - Install and Run mysql database at your local machine.
 
 - Clone Sourcecode.
