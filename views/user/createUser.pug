@@ -1,0 +1,71 @@
+extends ../layout.pug
+
+block append  styles
+  link(rel="stylesheet" type="text/css" href="/css/createUser.css")
+
+block content
+
+  div(class="userForm w-80 mt-4") 
+    h1(class="w-50 mx-auto text-center") Create user
+    form(class="w-50 mx-auto" id="user" method="post"  action="http://localhost:3000/user/create")
+      div(class="my-4")
+        input(
+          type="text"
+          class="form-control"
+          placeholder="Name"
+          id="userName"
+          name="name"
+        )
+      if nameExits
+        div This name is already exits.
+
+      div(class="my-4")
+        input(
+          type="text"
+          class="form-control"
+          placeholder="Password"
+          id="userPassword"
+          name="password"
+        )
+      div(class="my-4")
+        select(class="form-select" id="userRole" name="role")
+          option(hidden) Select role
+          each val in roles
+            option(value=val.id) #{val.name}
+
+      div(class="d-flex my-4 justify-content-between")
+        div(class="form-check")
+          input(
+            class="form-check-input"
+            type="checkbox"
+            value="manage contacts"
+            id="manageContacts"
+            name="manage_contacts"
+          )
+          label(class="form-check-label" for="flexCheckDefault") Manage contacts
+
+        div(class="form-check ")
+          input(
+            class="form-check-input"
+            type="checkbox"
+            value="manage companies"
+            id="manageCompanies"
+            name="manage_companies"
+          )
+          label(class="form-check-label" for="flexCheckChecked") Manage companies
+
+        div(class="form-check")
+          input(
+            class="form-check-input"
+            type="checkbox"
+            value="manage users"
+            id="manageUsers"
+            name="manage_users"
+          )
+          label(class="form-check-label" for="flexCheckChecked") Manage users
+
+
+
+      button(type="submit" id="createUser" class="btn btn-primary w-100") Create
+block append scriptsbottom  
+  script(src="/js/createUser.js")

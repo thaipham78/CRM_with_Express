@@ -1,0 +1,50 @@
+extends ../layout.pug
+
+block append  styles
+  link(rel="stylesheet" type="text/css" href="/css/createCompany.css")
+
+block content
+
+  div(class="contactForm w-80 mt-4") 
+    h1(class="w-50 mx-auto text-center") Create contact
+    form(class="w-50 mx-auto" id="contact"  method="post"  action="http://localhost:3000/contact/create")
+      div(class="my-4")
+        input(
+          type="text"
+          class="form-control"
+          placeholder="Name"
+          id="contactName"
+          name="name"
+        )
+      if nameExits
+         div This name is already exits.
+
+
+      div(class="my-4")
+        select(class="form-select" name="companyName" )
+          option(hidden) Select company
+          each val in companyList
+            option(value=val.id) #{val.name}
+
+
+      div(class="mb-4")
+        input(
+          type="text"
+          class="form-control"
+          placeholder="Phone"
+          id="contactPhone"
+          name="phone"
+      )
+      div(class="my-4")
+        input(
+          type="text"
+          class="form-control"
+          placeholder="Email"
+          id="contactEmail"
+          name="email"
+        )
+
+      button(type="submit" id="createContact" class="btn btn-primary w-100") Create
+block append scriptsbottom  
+  script(src="/js/createContact.js")
+

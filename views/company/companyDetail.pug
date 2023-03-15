@@ -1,0 +1,27 @@
+extends ../layout.pug
+
+block append  styles
+  link(
+    rel="stylesheet"
+    href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css"
+  )
+  link(rel="stylesheet" type="text/css" href="css/companyDetail.css")
+
+block content
+  nav(aria-label="breadcrumb")
+
+  div(class="create")
+    a(href=uri)
+      button(
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#contactModal"
+      ) Update Company
+
+  div(class="card mt-3")
+    div(class="card-body")
+      h5(class="card-title") companyDetail
+      p(class="card-text") Name : #{name}
+      p(class="card-text") Phone : #{phone}
+      p(class="card-text") Mail : #{mail}

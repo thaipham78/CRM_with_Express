@@ -1,0 +1,19 @@
+extends ../layout.pug
+
+block append  styles
+  link(
+    rel="stylesheet"
+    href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css"
+  )
+  link(rel="stylesheet" type="text/css" href="css/userDetail.css")
+
+block content
+  nav(aria-label="breadcrumb")
+
+
+  div(class="card mt-3")
+    div(class="card-body")
+      h5(class="card-title") User Detail
+      p(class="card-text") Name : #{name}
+      p(class="card-text") Role : #{relatedRole}
+    

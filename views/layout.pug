@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge" )
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Document
+    link( href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous")
+    link(
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    )
+ 
+    block styles      
+        link(rel="stylesheet" type="text/css" href="/css/layout.css")
+  body
+    div(class="container-fluid")
+      div(class="sidebar")
+        nav(class="nav flex-column text-white")
+            a(class="navbar-brand text-white fw-bold fs-5 px-3" href="/") Contact management
+            a(class="nav-link text-light" href="/user") Users
+            a(class="nav-link text-light" href="/contact") Contacts
+            a(class="nav-link text-light" href="/company") Companies
+      header
+       nav(class="navbar navbar-expand-lg bg-body-tertiary")
+          div(class="container-fluid")
+            ol(class="breadcrumb ms-3")
+            
+            
+        
+            div(class="logout me-3")
+              a(class="nav-link text-light" href="/auth/logout") 
+                button(type="button"  class="btn btn-outline-dark") Logout
+          
+      main
+        block content
+      
+    block scriptsbottom
+          script(src="/js/layout.js")  

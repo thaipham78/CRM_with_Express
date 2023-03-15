@@ -1,0 +1,45 @@
+extends ../layout.pug
+
+block append  styles
+  link(rel="stylesheet" type="text/css" href="/css/updateCompany.css")
+
+
+block content
+
+  div(class="companyForm w-80 mt-4") 
+    h1(class="w-50 mx-auto text-center") Update company
+    form(class="w-50 mx-auto" id="company"  method="post")
+      div(class="my-4")
+      input(
+        type="text"
+        class="form-control"
+        placeholder="Name"
+        id="companyName"
+        name="name"
+        value=name
+      )
+
+      div(class="mb-4")
+        input(
+          type="text"
+          class="form-control"
+          placeholder="Phone"
+          id="companyPhone"
+          name="phone"
+          value=phone
+        )
+      div(class="my-4")
+        input(
+          type="text"
+          class="form-control"
+          placeholder="Email"
+          id="companyEmail"
+          name="email"
+          value=mail
+        )
+
+      button(type="submit" id="updateCompany" class="btn btn-primary w-100") Update
+
+
+block append scriptsbottom  
+  script(src="/js/updateCompany.js")

@@ -1,0 +1,208 @@
+extends ../layout.pug
+
+block append styles
+  link(
+    rel="stylesheet"
+    href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css"
+  )
+  link(rel="stylesheet" type="text/css" href="/css/company.css")
+
+
+
+block content
+  
+    div(class="create")
+    a(href="/company/create")
+      button(
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#contactModal"
+      ) Add Company
+
+    div(id="toolbar")
+      button(id="remove" class="btn btn-danger" disabled)
+        i(class="fa fa-trash")  Delete
+
+    table(
+      id="table"
+      data-toolbar="#toolbar"
+      data-search="true"
+      data-show-refresh="true"
+      data-show-export="true"
+      data-click-to-select="true"
+      data-minimum-count-columns="2"
+      data-show-pagination-switch="true"
+      data-pagination="true"
+      data-id-field="id"
+      data-page-list="[5, 10, 15, 20, all]"
+      data-page-size="5"
+      data-show-footer="true"
+      data-side-pagination="server"
+      data-url="http://localhost:3000/company/data"
+      data-response-handler="responseHandler"
+    )
+
+
+block append scriptsbottom
+  script(src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js")
+  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous")
+  script(src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.js")  
+  script(src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js")
+  script(src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table-locale-all.min.js")
+  script(src="https://unpkg.com/bootstrap-table@1.21.2/dist/extensions/export/bootstrap-table-export.min.js")
+
+  script.
+    var $table = $("#table");
+    var $remove = $("#remove");
+    var selections = [];
+
+    function getIdSelections() {
+    return $.map($table.bootstrapTable("getSelections"), function (row) {
+      return row.id;
+      });
+    }
+
+    function responseHandler(res) {
+      $.each(res.rows, function (i, row) {
+        row.state = $.inArray(row.id, selections) !== -1;
+      });
+      return res;
+    }
+
+    function detailFormatter(index, row) {
+      var html = [];
+      $.each(row, function (key, value) {
+        html.push("<p><b>" + key + ":</b> " + value + "</p>");
+      });
+      return html.join("");
+    }
+
+    function operateFormatter(value, row, index) {
+      return [
+        '<a class="like" href="javascript:void(0)" title="Like">',
+        '<i class="fa fa-heart"></i>',
+        "</a>  ",
+        '<a class="remove" href="javascript:void(0)" title="Remove">',
+        '<i class="fa fa-trash"></i>',
+        "</a>",
+      ].join("");
+    }
+
+    window.operateEvents = {
+      "click .like": function (e, value, row, index) {
+        alert("You click like action, row: " + JSON.stringify(row));
+      },
+      "click .remove": function (e, value, row, index) {
+        $table.bootstrapTable("remove", {
+          field: "id",
+          values: [row.id],
+        });
+      },
+    };
+
+    function initTable() {
+      $table.bootstrapTable("destroy").bootstrapTable({
+        height: 400,
+        locale: "en-US",
+        columns: [
+          [
+            {
+              field: "state",
+              checkbox: true,
+              rowspan: 2,
+              align: "center",
+              valign: "middle",
+            },
+            {
+              title: "ID",
+              field: "id",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+
+            {
+              title: "Name",
+              field: "name",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+
+            {
+              title: "Phone",
+              field: "phone",
+              align: "center",
+              valign: "middle",
+            },
+            {
+              title: "Email",
+              field: "email",
+              align: "center",
+              valign: "middle",
+            },
+            {
+              title: "Created by",
+              field: "createdBy",
+              align: "center",
+              valign: "middle",
+            },
+          ],
+          [],
+        ],
+      });
+
+       $table.on("click-row.bs.table",function(){
+        let idList=getIdSelections();
+           idList.forEach(id=>{
+          if(id){
+         window.location.href="http://localhost:3000/company/"+id.toString()
+        }
+        })
+      })
+
+      $table.on(
+        "check.bs.table uncheck.bs.table " +
+          "check-all.bs.table uncheck-all.bs.table",
+        function () {
+          $remove.prop("disabled", !$table.bootstrapTable("getSelections").length);
+
+          // save your data, here just save the current page
+          selections = getIdSelections();
+          // push or splice the selections if you want to save all data selections
+        }
+      );
+      $table.on("all.bs.table", function (e, name, args) {
+        console.log(name, args);
+      });
+      $remove.click(function () {
+        var ids = getIdSelections();
+        $table.bootstrapTable("remove", {
+          field: "id",
+          values: ids,
+        });
+         ids.forEach(id=>{
+          if(id){
+          $.ajax({
+        url: 'http://localhost:3000/company/delete/'+id.toString(),
+        type: 'DELETE',
+        success: function(data) {
+        //play with data
+        }
+      })
+        }
+        })
+        $remove.prop("disabled", true);
+      });
+    }
+
+    $(function () {
+      initTable();
+    });
+
+
+
+
