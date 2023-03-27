@@ -16,6 +16,7 @@ block content
           id="userName"
           name="name"
         )
+        small(class="success text-danger")
       if nameExits
         div This name is already exits.
 
@@ -27,13 +28,14 @@ block content
           id="userPassword"
           name="password"
         )
+        small(class="success text-danger")
       div(class="my-4")
         select(class="form-select" id="userRole" name="role")
           option(hidden) Select role
           each val in roles
             option(value=val.id) #{val.name}
-
-      div(class="d-flex my-4 justify-content-between")
+        small(class="success text-danger")
+      div(class="d-flex my-4 justify-content-between choices")
         div(class="form-check")
           input(
             class="form-check-input"
@@ -42,7 +44,8 @@ block content
             id="manageContacts"
             name="manage_contacts"
           )
-          label(class="form-check-label" for="flexCheckDefault") Manage contacts
+          label(class="form-check-label" id="contactLabel" for="flexCheckDefault") Manage contacts 
+          small(class="success text-danger")
 
         div(class="form-check ")
           input(
@@ -63,7 +66,9 @@ block content
             name="manage_users"
           )
           label(class="form-check-label" for="flexCheckChecked") Manage users
-
+        
+      
+   
 
 
       button(type="submit" id="createUser" class="btn btn-primary w-100") Create

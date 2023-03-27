@@ -16,8 +16,9 @@ block content
           id="contactName"
           name="name"
         )
+        small(class="success text-danger")
       if nameExits
-         div This name is already exits.
+        div This name is already exits.
 
 
       div(class="my-4")
@@ -34,7 +35,8 @@ block content
           placeholder="Phone"
           id="contactPhone"
           name="phone"
-      )
+        )
+        small(class="success text-danger")
       div(class="my-4")
         input(
           type="text"
@@ -43,7 +45,7 @@ block content
           id="contactEmail"
           name="email"
         )
-
+        small(class="success text-danger")
       button(type="submit" id="createContact" class="btn btn-primary w-100") Create
 block append scriptsbottom  
   script(src="/js/createContact.js")

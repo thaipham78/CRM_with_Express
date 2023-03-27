@@ -6,3 +6,7 @@
   margin-left: 25px;
 }
 
+.checkBoxError{
+  margin-left: 0px;
+  display: block;
+}
