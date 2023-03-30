@@ -17,7 +17,6 @@ const isDropdownRequired = (value) =>
 
 const isChoicesRequired = (choices) => {
   let result;
-  console.log(choices);
   choices.forEach((choice) => {
     if (choice) {
       result = true;
@@ -43,7 +42,6 @@ const isPasswordSecure = (password) => {
 
 function showErrorMessage(element, message, status,cssList) {
   let messagePlaceHolder = element.nextElementSibling;
-  console.log(status, "ccvv");
   if (!status) {
     messagePlaceHolder.textContent = message;
     messagePlaceHolder.classList.remove(cssList[0]);
@@ -66,7 +64,6 @@ function verifyName() {
   if (!isRequired(data)) {
     message = "Company name can not be blank !";
     status = isRequired(data);
-    console.log(isRequired(data));
     showErrorMessage(userName, message, status,["success","error"]);
     return status;
   } else {
@@ -77,7 +74,6 @@ function verifyName() {
   if (!isBetween(data.length, 8, 32)) {
     message = "User name must be at least 8 characters !";
     status = isBetween(data.length, 8, 32);
-    console.log(status);
     showErrorMessage(userName, message, status,["success","error"]);
     return status;
   } else {
@@ -96,7 +92,6 @@ function verifyPassword() {
   if (!isRequired(data)) {
     message = "Password can not be blank !";
     status = isRequired(data);
-    console.log(isRequired(data));
     showErrorMessage(password, message, status,["success","error"]);
     return status;
   } else {
@@ -108,7 +103,6 @@ function verifyPassword() {
     message =
       "Password must contain : at least 8 characters, 1 uppercase character , 1 lower character , 1 special character";
     status = isPasswordSecure(data.length, 8, 32);
-    console.log(status);
     showErrorMessage(password, message, status,["success","error"]);
     return status;
   } else {
@@ -122,12 +116,10 @@ function verifyRole() {
   let message;
   let status;
   let data = role;
-  console.log(data,"vvvv78");
   // Case Empty
   if (!isDropdownRequired(data)) {
     message = "Role can not be blank !";
     status = isDropdownRequired(data);
-    console.log(isDropdownRequired(data),"vvv8");
     showErrorMessage(role, message, status,["success","error"]);
     return status;
   } else {
@@ -146,11 +138,9 @@ function verifyPermission() {
     manage_contacts.checked,
   ];
 
-  // console.log(manage_users.checked,"ffffc");
   if (!isChoicesRequired(permission_list)) {
     message = "Permission can not be blank !";
     status = isChoicesRequired(permission_list);
-    console.log(status);
     showErrorMessage (contactLabel, message, status,["success","checkBoxError"]);
     return false;
   } else {
@@ -168,8 +158,6 @@ function handleCreate(e) {
   let isPermissionValid = verifyPermission();
   // let isEmailValid = verifyCompanyEmail();
 
-  // console.log(isNameValid, isPhoneValid, isEmailValid);
-  console.log(verifyPermission(),"ff");
   if (isNameValid && isPasswordValid && isRoleValid && isPermissionValid) {
     form.submit();
   }

@@ -22,8 +22,6 @@ async function getContacts(req, res, next) {
       total: total,
       rows: rows,
     };
-
-    // console.log(rows, total);
     res.json(data);
   } catch (errors) {
     logger.log("error", errors);
@@ -112,7 +110,6 @@ async function updateContact(req, res, next) {
       break;
     case "POST":
       try {
-        // console.log(req.params.id);
         let { name, phone, email, companyName, companyId } = req.body;
         let updateCompany = null;
         if (companyId != companyName) {

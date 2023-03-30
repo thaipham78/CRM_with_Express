@@ -22,7 +22,6 @@ const isEmailValid = (email) => {
 
 function showErrorMessage(element, message, status) {
   let messagePlaceHolder = element.nextElementSibling;
-  console.log(status, "ccvv");
   if (!status) {
     messagePlaceHolder.textContent = message;
     messagePlaceHolder.classList.remove("success");
@@ -45,7 +44,6 @@ function verifyName() {
   if (!isRequired(data)) {
     message = "Contact name can not be blank !";
     status = isRequired(data);
-    console.log(isRequired(data));
     showErrorMessage(contactName, message, status);
     return status;
   } else {
@@ -56,7 +54,6 @@ function verifyName() {
   if (!isBetween(data.length, 8, 32)) {
     message = "Contact name must be at least 8 characters !";
     status = isBetween(data.length, 8, 32);
-    console.log(status);
     showErrorMessage(contactName, message, status);
     return status;
   } else {
@@ -75,7 +72,6 @@ function verifyPhone() {
   if (!isRequired(data)) {
     message = "Contact phone can not be blank !";
     status = isRequired(data);
-    console.log(isRequired(data));
     showErrorMessage(contactPhone, message, status);
     return status;
   } else {
@@ -86,7 +82,6 @@ function verifyPhone() {
   if (!isPhoneValid(data)) {
     message = "Invalid phone number !";
     status = isPhoneValid(data);
-    console.log(isPhoneValid(data));
     showErrorMessage(contactPhone, message, status);
     return status;
   } else {
@@ -105,7 +100,6 @@ function verifyEmail() {
   if (!isRequired(data)) {
     message = "Contact email can not be blank !";
     status = isRequired(data);
-    console.log(isRequired(data));
     showErrorMessage(contactEmail, message, status);
     return status;
   } else {
@@ -116,7 +110,6 @@ function verifyEmail() {
   if (!isEmailValid(data)) {
     message = "Invalid email address !";
     status = isEmailValid(data);
-    console.log(isEmailValid(data));
     showErrorMessage(contactEmail, message, status);
     return status;
   } else {
@@ -132,8 +125,6 @@ function handleCreate(e) {
   let isNameValid = verifyName();
   let isPhoneValid = verifyPhone();
   let isEmailValid = verifyEmail();
-
-  // console.log(isNameValid, isPhoneValid, isEmailValid);
   if (isNameValid && isPhoneValid && isEmailValid) {
     form.action = window.location.href;
     form.submit();

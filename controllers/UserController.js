@@ -31,7 +31,6 @@ async function getUsers(req, res, next) {
         total: total,
         rows: rows,
       };
-      // console.log(rows, total);
       res.json(data);
     } else {
       res.redirect("/");
@@ -87,10 +86,8 @@ async function createUser(req, res, next) {
             where: { id: role },
           });
 
-          // console.log(incoming_role);
           let checkName = await user.getByName(name);
 
-          // console.log(checkName);
           if (checkName) {
             res.render("user/createUser", {
               nameExits: true,
@@ -99,9 +96,7 @@ async function createUser(req, res, next) {
             });
           } else {
             const saltRounds = parseInt(process.env.SESSIONSECRET);
-            // console.log(process.env.SESSIONSECRET);
             let hashedPass = await bcrypt.hash(password, saltRounds);
-            // console.log(hashedPass);
             await user.addUser(
               {
                 name: name,
@@ -131,8 +126,6 @@ async function getUserDetail(req, res, next) {
   try {
     if (req.session.role && checkPermission(req.session.role)) {
       let userData = await user.getUser(req.params.id);
-      //   console.log(companyData.dataValues);
-
       if (userData.queryUser.dataValues) {
         let { name } = userData.queryUser.dataValues;
         let { name: rName } = userData.relatedRole.dataValues;

@@ -1,9 +1,7 @@
 let intitUrl = window.location.href;
-console.log(intitUrl.replace("http://localhost:3000", "home"));
 let url = intitUrl.replace("http://localhost:3000", "home").split("/");
 
 let filtered = url.filter((ele) => ele);
-console.log(filtered);
 filtered.map((ele, index) => {
   if (ele == "home") {
     filtered[index] = { label: ele, href: "/" };
@@ -12,8 +10,6 @@ filtered.map((ele, index) => {
   }
 });
 
-console.log(intitUrl);
-console.log(filtered);
 
 let breadcumb = document.querySelector(".breadcrumb");
 function capitalizeFirstLetter(string) {

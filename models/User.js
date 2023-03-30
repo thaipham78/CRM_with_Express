@@ -40,7 +40,6 @@ User.getUsers = async function (offset, limit) {
     raw: true,
     include: { all: true },
   });
-  // console.log(rows);
   return { total, rows };
 };
 

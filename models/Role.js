@@ -23,7 +23,6 @@ Role.getRoles = async function () {
   let rows = await Role.findAll({
     raw: true,
   });
-  // console.log(rows);
   return rows;
 };
 

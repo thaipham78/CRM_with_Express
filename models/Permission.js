@@ -22,7 +22,6 @@ Permission.getPermissions = async function () {
   let rows = await Permission.findAll({
     raw: true,
   });
-  // console.log(rows);
   return rows;
 };
 

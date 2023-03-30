@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const { logger } = require("../utils/logger.js");
 
 function isAuthenticated(req) {
-  // console.log("hhh");
   if (req.session.user) return true;
   else return false;
 }
@@ -23,7 +22,6 @@ async function login(req, res, next) {
           userData = await user.getByName(req.body.name);
           extractedUserData = userData.queryUser.dataValues;
           relatedRole = userData.relatedRole.dataValues;
-          // console.log(req.body.password,extractedUserData.password);
           match = await bcrypt.compare(
             req.body.password,
             extractedUserData.password
@@ -65,12 +63,10 @@ async function login(req, res, next) {
 function logout(req, res) {
   try {
     // logout logic
-    //  console.log("gggg");
     // clear the user from the session object and save.
     // this will ensure that re-using the old session id
     // does not have a logged in user
     req.session.user = null;
-    // console.log(req.session.user,"fff");
     req.session.save(function (err) {
       if (err) next(err);
 

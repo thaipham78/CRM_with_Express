@@ -116,7 +116,6 @@ async function updateCompany(req, res, next) {
 }
 
 async function getCompanyDetail(req, res, next) {
-  //   console.log(companyData.dataValues);
   try {
     let companyData = await company.getCompany(req.params.id);
     if (companyData.dataValues) {

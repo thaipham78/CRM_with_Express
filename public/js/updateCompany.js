@@ -22,7 +22,6 @@ const isEmailValid = (email) => {
 
 function showErrorMessage(element, message, status) {
   let messagePlaceHolder = element.nextElementSibling;
-  console.log(status, "ccvv");
   if (!status) {
     messagePlaceHolder.textContent = message;
     messagePlaceHolder.classList.remove("success");
@@ -45,7 +44,6 @@ function verifyCompanyName() {
   if (!isRequired(data)) {
     message = "Company name can not be blank !";
     status = isRequired(data);
-    console.log(isRequired(data));
     showErrorMessage(companyName, message, status);
     return status;
   } else {
@@ -56,7 +54,6 @@ function verifyCompanyName() {
   if (!isBetween(data.length, 8, 32)) {
     message = "Company name must be at least 8 characters !";
     status = isBetween(data.length, 8, 32);
-    console.log(status);
     showErrorMessage(companyName, message, status);
     return status;
   } else {
@@ -75,7 +72,6 @@ function verifyCompanyPhone() {
   if (!isRequired(data)) {
     message = "Company phone can not be blank !";
     status = isRequired(data);
-    console.log(isRequired(data));
     showErrorMessage(companyPhone, message, status);
     return status;
   } else {
@@ -86,7 +82,6 @@ function verifyCompanyPhone() {
   if (!isPhoneValid(data)) {
     message = "Invalid phone number !";
     status = isPhoneValid(data);
-    console.log(isPhoneValid(data));
     showErrorMessage(companyPhone, message, status);
     return status;
   } else {
@@ -105,7 +100,6 @@ function verifyCompanyEmail() {
   if (!isRequired(data)) {
     message = "Company email can not be blank !";
     status = isRequired(data);
-    console.log(isRequired(data));
     showErrorMessage(companyEmail, message, status);
     return status;
   } else {
@@ -116,7 +110,6 @@ function verifyCompanyEmail() {
   if (!isEmailValid(data)) {
     message = "Invalid email address !";
     status = isEmailValid(data);
-    console.log(isEmailValid(data));
     showErrorMessage(companyEmail, message, status);
     return status;
   } else {
