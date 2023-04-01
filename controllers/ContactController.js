@@ -47,6 +47,7 @@ async function createContact(req, res, next) {
         let companies = await company.getCompanies(0, 5);
         let rows = companies.rows;
         let { name, phone, email, companyName } = req.body;
+        let userName = req.session.userName;
         const inputCompany = await company.findOne({
           where: { id: companyName },
         });
@@ -64,6 +65,7 @@ async function createContact(req, res, next) {
               name: name,
               email: email,
               phone: phone,
+              createdBy: userName,
               createdAt: Date.now(),
               updatedAt: Date.now(),
             },
@@ -111,6 +113,7 @@ async function updateContact(req, res, next) {
     case "POST":
       try {
         let { name, phone, email, companyName, companyId } = req.body;
+        let userName = req.session.userName;
         let updateCompany = null;
         if (companyId != companyName) {
           updateCompany = await company.findOne({
@@ -123,6 +126,7 @@ async function updateContact(req, res, next) {
             name: name,
             email: email,
             phone: phone,
+            createdBy: userName,
             updatedAt: Date.now(),
           },
           req.params.id,
@@ -162,11 +166,10 @@ async function getContactDetail(req, res, next) {
 }
 
 async function deleteContact(req, res, next) {
-  try{
+  try {
     await contact.removeContact(req.params.id);
     res.redirect("/contact");
-  }
-  catch(errors){
+  } catch (errors) {
     logger.log("error", errors);
     return next(errors);
   }

@@ -32,6 +32,7 @@ async function login(req, res, next) {
 
               // store user information in session, typically a user id
               req.session.user = extractedUserData.id;
+              req.session.userName = req.body.name;
               req.session.role = relatedRole.name;
               // save the session before redirection to ensure page
               // load does not happen before session is saved

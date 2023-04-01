@@ -10,7 +10,6 @@ filtered.map((ele, index) => {
   }
 });
 
-
 let breadcumb = document.querySelector(".breadcrumb");
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -32,3 +31,20 @@ function setBreadcumbActive() {
   currentItem.classList.add("active");
 }
 setBreadcumbActive();
+
+// tabs selectors
+let tabs = document.querySelectorAll(".nav .nav-link");
+console.log(tabs);
+// console.log(intitUrl);
+
+function setActiveTab() {
+  tabs.forEach((tab) => {
+    if (tab.href == intitUrl) {
+      tab.classList.add("active-tab");
+    } else {
+      tab.classList.remove("active-tab");
+    }
+  });
+}
+
+setActiveTab();
