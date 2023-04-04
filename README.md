@@ -25,4 +25,8 @@ DEV_PORT=3000 \
 SESSIONSECRET=10 
 
 - Run npm install.
+- Run npm run generate-user.
 - Run npm run start.
+
+- Account : crmuser78.
+- Pass : 741852963@Vn.
