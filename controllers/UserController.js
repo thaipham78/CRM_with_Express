@@ -2,6 +2,7 @@ const { user, user_role, permission } = require("../models/index.js");
 const bcrypt = require("bcrypt");
 const { logger } = require("../utils/logger.js");
 
+
 function checkPermission(role) {
   if (role == "admin") {
     return true;
@@ -62,6 +63,7 @@ async function createUser(req, res, next) {
             manage_contacts,
             manage_companies,
           } = req.body;
+
           let permission_1 = null;
           let permission_2 = null;
           let permission_3 = null;
@@ -97,6 +99,7 @@ async function createUser(req, res, next) {
           } else {
             const saltRounds = parseInt(process.env.SESSIONSECRET);
             let hashedPass = await bcrypt.hash(password, saltRounds);
+          
             await user.addUser(
               {
                 name: name,
