@@ -48,3 +48,41 @@ function setActiveTab() {
 }
 
 setActiveTab();
+
+function getCookie(name) {
+  const cookieData = document.cookie;
+
+  const cookieValue = cookieData
+    .split("; ")
+    .find((cookie) => cookie.startsWith(name + "="));
+
+  if (cookieValue) {
+    // The cookie exists.
+    const cookieValueWithoutQuotes = cookieValue.substring(name.length + 1);
+    return cookieValueWithoutQuotes;
+  }
+}
+let loginAlert = document.querySelector("#login-alert");
+let isLoginIn = getCookie("isLoginIn");
+
+function tracking() {
+  setTimeout(() => {
+    loginAlert.style.display = "none";
+  }, 500);
+}
+
+function showAlert(status) {
+  if (!isLoginIn && status) {
+    console.log("ffc");
+    loginAlert.style.display = "block";
+    tracking();
+    let cookieName = "isLoginIn";
+    document.cookie = `${cookieName}=${status}`;
+  }
+}
+
+function logOut(event) {
+  event.preventDefault();
+  document.cookie = "isLoginIn=;";
+  location.href = "http://localhost:3000/auth/logout";
+}

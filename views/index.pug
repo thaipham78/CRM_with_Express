@@ -5,8 +5,12 @@ block append styles
 
 
 block content
-
+  div(class="alert alert-primary" id="login-alert" role="alert") Login Succesfully !
   div(class="welcome text-center") 
     h1(class="mx-auto w-75")  Welcome to the CRM !
     a(href="/contact")
       button Let's see your contacts
+block append scriptsbottom  
+  script(src="/js/home.js")
+  script. 
+    showAlert(#{isLoginIn})   
