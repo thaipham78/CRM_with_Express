@@ -1,16 +1,22 @@
 const { company } = require("../models/index.js");
 const { logger } = require("../utils/logger.js");
+const { isAuthenticated } = require("./AuthController.js");
 
-async function index(req,res,next) {
- 
-  try{
-    await res.render("company/company");
+async function guard(req, res, next) {
+  if (isAuthenticated(req)) {
+    next();
+  } else {
+    await res.redirect("auth/login");
   }
-  catch(errors){
+}
+
+async function index(req, res, next) {
+  try {
+    await res.render("company/company");
+  } catch (errors) {
     logger.log("error", errors);
     return next(errors);
   }
-
 }
 
 async function getCompanies(req, res, next) {
@@ -34,12 +40,11 @@ async function createCompany(req, res, next) {
   switch (req.method) {
     case "GET":
       try {
-       await res.render("company/createCompany");
-      }
-      catch(errors){
+        await res.render("company/createCompany");
+      } catch (errors) {
         logger.log("error", errors);
         return next(errors);
-      }    
+      }
       break;
     case "POST":
       try {

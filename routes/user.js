@@ -7,18 +7,26 @@ const {
   index,
   getUsers,
 } = require("../controllers/UserController");
+const { isAuthenticated } = require("../controllers/AuthController");
 
+async function guard(req, res, next) {
+  if (isAuthenticated(req)) {
+    next();
+  } else {
+    await res.redirect("/auth/login");
+  }
+}
 // Get Contact List
-router.get("/", index);
+router.get("/", guard, index);
 
 router.get("/data", getUsers);
 
-router.get("/create", createUser);
+router.get("/create", guard, createUser);
 
-router.post("/create", createUser);
+router.post("/create", guard, createUser);
 
-router.get("/:id", getUserDetail);
+router.get("/:id", guard, getUserDetail);
 
-router.delete("/delete/:id", deleteUser);
+router.delete("/delete/:id", guard, deleteUser);
 
 module.exports = router;

@@ -23,9 +23,15 @@ html
             
           div(class="mb-4")
               input(type="password" class="form-control" placeholder="Password" name="password" id="exampleInputPassword1")
-          
+         
+          div(class="mb-4 err-message")
+              div(class="alert alert-danger  text-center" role="alert")
+                    div Login Unsuccessfully !
+   
           button(type="submit" id="loginBtn" class="btn btn-primary w-100") Submit
      
 
-      script(src="/js/login.js")          
+      script(src="/js/login.js").
+      script. 
+        showAlert(#{isLogIn})            
         

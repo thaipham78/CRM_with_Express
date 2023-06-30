@@ -41,16 +41,14 @@ async function login(req, res, next) {
                 res.redirect("/");
               });
             });
-          } else {
-            res.redirect("/auth/login");
           }
         } else {
-          res.redirect("/auth/login");
+          res.render("login", { isLogIn: false });
         }
         break;
       } catch (errors) {
         logger.log("error", errors);
-        return next(errors);
+        res.render("login", { isLogIn: false });
       }
   }
 

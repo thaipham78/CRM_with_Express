@@ -46,7 +46,6 @@ function setActiveTab() {
     }
   });
 }
-
 setActiveTab();
 
 function getCookie(name) {
@@ -68,12 +67,11 @@ let isLoginIn = getCookie("isLoginIn");
 function tracking() {
   setTimeout(() => {
     loginAlert.style.display = "none";
-  }, 500);
+  }, 1000);
 }
 
 function showAlert(status) {
   if (!isLoginIn && status) {
-    console.log("ffc");
     loginAlert.style.display = "block";
     tracking();
     let cookieName = "isLoginIn";
