@@ -63,7 +63,7 @@ async function createCompany(req, res, next) {
             updatedAt: Date.now(),
           });
 
-          res.redirect("/company");
+          res.redirect("/company?add=1");
         }
       } catch (err) {
         logger.error(err);
@@ -109,7 +109,7 @@ async function updateCompany(req, res, next) {
           req.params.id
         );
 
-        res.redirect("/company");
+        res.redirect("/company?update=1");
       } catch (err) {
         logger.log("error", err);
         return next(err);
@@ -141,8 +141,8 @@ async function getCompanyDetail(req, res, next) {
 
 async function deleteCompany(req, res) {
   try {
-    await company.removeCompany(req.params.id);
-    res.redirect("/company");
+     await company.removeCompany(req.params.id);
+    res.json("1");
   } catch (errors) {
     logger.log("error", errors);
     return next(errors);

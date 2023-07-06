@@ -11,6 +11,7 @@ block content
     a(href="/contact")
       button Let's see your contacts
 block append scriptsbottom  
-  script(src="/js/home.js")
-  script. 
-    showAlert(#{isLoginIn})   
+  script(type="module" src="/js/home.js")
+  script(type="module").
+    import {loadLoginALert} from "/js/utils/index.js"
+    loadLoginALert(#{isLoginIn})   

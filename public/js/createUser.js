@@ -5,163 +5,40 @@ const role = document.querySelector("#userRole");
 const manage_users = document.querySelector("#manageUsers");
 const manage_companies = document.querySelector("#manageCompanies");
 const manage_contacts = document.querySelector("#manageContacts");
-const permissionchoices =  document.querySelector(".choice");
-const contactLabel=document.querySelector("#contactLabel");
+const contactLabel = document.querySelector("#contactLabel");
+import {
+  verifyName,
+  verifyPassword,
+  verifyRole,
+  verifyPermission,
+} from "./utils/index.js";
 
 const form = document.querySelector("#user");
 
-const isRequired = (value) => (value === "" ? false : true);
-
-const isDropdownRequired = (value) =>
-  (value.selectedIndex<=0? false : true);
-
-const isChoicesRequired = (choices) => {
-  let result;
-  choices.forEach((choice) => {
-    if (choice) {
-      result = true;
-    }
-  });
-  if(result){
-    return true;
-  }
-  else{
-    return false;
-  }
-};
-
-const isBetween = (length, min, max) =>
-  length < min || length > max ? false : true;
-
-const isPasswordSecure = (password) => {
-  const re = new RegExp(
-    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-  );
-  return re.test(password);
-};
-
-function showErrorMessage(element, message, status,cssList) {
-  let messagePlaceHolder = element.nextElementSibling;
-  if (!status) {
-    messagePlaceHolder.textContent = message;
-    messagePlaceHolder.classList.remove(cssList[0]);
-    messagePlaceHolder.classList.add(cssList[1]);
-  }
-  if (status) {
-    messagePlaceHolder.textContent = message;
-    messagePlaceHolder.classList.remove(cssList[1]);
-    messagePlaceHolder.classList.add(cssList[0]);
-  }
-}
-
-function verifyName() {
-  // let element = document.querySelector("#companyName");
-  let message;
-  let status;
-  let data = userName.value;
-
-  // Case Empty
-  if (!isRequired(data)) {
-    message = "Company name can not be blank !";
-    status = isRequired(data);
-    showErrorMessage(userName, message, status,["success","error"]);
-    return status;
-  } else {
-    showErrorMessage(userName, "", isRequired(data),["success","error"]);
-  }
-
-  // Case Enough character
-  if (!isBetween(data.length, 8, 32)) {
-    message = "User name must be at least 8 characters !";
-    status = isBetween(data.length, 8, 32);
-    showErrorMessage(userName, message, status,["success","error"]);
-    return status;
-  } else {
-    showErrorMessage(userName, "", isBetween(data),["success","error"]);
-  }
-
-  return true;
-}
-
-function verifyPassword() {
-  let message;
-  let status;
-  let data = password.value;
-
-  // Case Empty
-  if (!isRequired(data)) {
-    message = "Password can not be blank !";
-    status = isRequired(data);
-    showErrorMessage(password, message, status,["success","error"]);
-    return status;
-  } else {
-    showErrorMessage(password, "", isRequired(data),["success","error"]);
-  }
-
-  //Case password  secure
-  if (!isPasswordSecure(data)) {
-    message =
-      "Password must contain : at least 8 characters, 1 uppercase character , 1 lower character , 1 special character";
-    status = isPasswordSecure(data.length, 8, 32);
-    showErrorMessage(password, message, status,["success","error"]);
-    return status;
-  } else {
-    showErrorMessage(password, "", isPasswordSecure(data),["success","error"]);
-  }
-
-  return true;
-}
-
-function verifyRole() {
-  let message;
-  let status;
-  let data = role;
-  // Case Empty
-  if (!isDropdownRequired(data)) {
-    message = "Role can not be blank !";
-    status = isDropdownRequired(data);
-    showErrorMessage(role, message, status,["success","error"]);
-    return status;
-  } else {
-    showErrorMessage(role, "", isDropdownRequired(data),["success","error"]);
-  }
-
-  return true;
-}
-
-function verifyPermission() {
-  let message;
-  let status;
-  const permission_list = [
-    manage_users.checked,
-    manage_companies.checked,
-    manage_contacts.checked,
-  ];
-
-  if (!isChoicesRequired(permission_list)) {
-    message = "Permission can not be blank !";
-    status = isChoicesRequired(permission_list);
-    showErrorMessage (contactLabel, message, status,["success","checkBoxError"]);
-    return false;
-  } else {
-    showErrorMessage(contactLabel, "", isChoicesRequired(permission_list),["success","checkBoxError"]);
-  }
-
-  return true;
-}
-
 function handleCreate(e) {
   e.preventDefault();
-  let isNameValid = verifyName();
-  let isPasswordValid = verifyPassword();
-  let isRoleValid = verifyRole();
-  let isPermissionValid = verifyPermission();
-  // let isEmailValid = verifyCompanyEmail();
-
+  let isNameValid = verifyName(userName, {
+    empty: "Username can not be blank !",
+    longEnough: "Username must be at least 8 characters !",
+  });
+  let isPasswordValid = verifyPassword(password, {
+    empty: "Password can not be blank !",
+    invalid:
+      "Password must contain : at least 8 characters, 1 uppercase character , 1 lower character , 1 special character",
+  });
+  let isRoleValid = verifyRole(role, {
+    empty: "Role can not be blank !",
+  });
+  let isPermissionValid = verifyPermission(
+    [manage_users, manage_companies, manage_contacts],
+    contactLabel,
+    {
+      empty: "Permission can not be blank !",
+    }
+  );
   if (isNameValid && isPasswordValid && isRoleValid && isPermissionValid) {
     form.submit();
   }
-
 }
 
 createBtn.addEventListener("click", handleCreate);
@@ -186,10 +63,17 @@ form.addEventListener(
   debounce(function (e) {
     switch (e.target.id) {
       case "userName":
-        verifyName();
+        verifyName(userName, {
+          empty: "Username can not be blank !",
+          longEnough: "Username must be at least 8 characters !",
+        });
         break;
       case "userPassword":
-        verifyPassword();
+        verifyPassword(password, {
+          empty: "Password can not be blank !",
+          invalid:
+            "Password must contain : at least 8 characters, 1 uppercase character , 1 lower character , 1 special character",
+        });
         break;
     }
   })

@@ -17,6 +17,7 @@ html
     block styles      
         link(rel="stylesheet" type="text/css" href="/css/layout.css")
   body
+    div(class="loader")
     div(class="container-fluid")
       div(class="sidebar")
         nav(class="nav flex-column text-white")
@@ -33,10 +34,10 @@ html
         
             div(class="logout me-3")
               a(class="nav-link text-light" href="#") 
-                button(type="button"  class="btn btn-outline-dark" id="logout" onclick="logOut(event);") Logout
+                button(type="button"  class="btn btn-outline-dark" id="logout") Logout
           
       main
         block content
       
     block scriptsbottom
-          script(src="/js/layout.js")  
+          script(type="module" src="/js/layout.js")  

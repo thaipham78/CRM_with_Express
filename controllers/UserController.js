@@ -110,7 +110,7 @@ async function createUser(req, res, next) {
               incoming_role,
               [permission_1, permission_2, permission_3]
             );
-            res.redirect("/user");
+            res.redirect("/user?add=1");
           }
           break;
         default:

@@ -20,10 +20,14 @@ html
         form(class="" id="login" method="post" action="http://localhost:3000/auth/login")
           div(class="my-4")
               input(type="text" class="form-control" placeholder="Account" name="name" id="accounName") 
-            
+              small(class="success text-danger") 
+          if nameExits
+              div This user is already exits.
           div(class="mb-4")
-              input(type="password" class="form-control" placeholder="Password" name="password" id="exampleInputPassword1")
-         
+              input(type="password" class="form-control" placeholder="Password" name="password" id="password")
+              small(class="success text-danger") 
+          if passExits
+              div This password is already exits.
           div(class="mb-4 err-message")
               div(class="alert alert-danger  text-center" role="alert")
                     div Login Unsuccessfully !
@@ -31,7 +35,8 @@ html
           button(type="submit" id="loginBtn" class="btn btn-primary w-100") Submit
      
 
-      script(src="/js/login.js").
-      script. 
-        showAlert(#{isLogIn})            
+      script(type="module" src="/js/login.js").
+      script(type="module").
+        import {showFailMessage} from "/js/login.js"
+        showFailMessage(#{isLogIn})            
         

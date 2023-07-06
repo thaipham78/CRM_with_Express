@@ -72,7 +72,7 @@ async function createContact(req, res, next) {
             inputCompany
           );
 
-          res.redirect("/contact");
+          res.redirect("/contact?add=1");
         }
       } catch (errors) {
         logger.log("error", errors);
@@ -133,7 +133,7 @@ async function updateContact(req, res, next) {
           updateCompany
         );
 
-        res.redirect("/contact");
+        res.redirect("/contact?update=1");
       } catch (errors) {
         logger.log("error", errors);
         return next(errors);

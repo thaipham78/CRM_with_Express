@@ -3,129 +3,22 @@ const companyName = document.querySelector("#companyName");
 const companyPhone = document.querySelector("#companyPhone");
 const companyEmail = document.querySelector("#companyEmail");
 const form = document.querySelector("#company");
-
-//Selectors
-const isRequired = (value) => (value === "" ? false : true);
-
-const isBetween = (length, min, max) =>
-  length < min || length > max ? false : true;
-
-const isPhoneValid = (phone) => {
-  const re = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
-  return re.test(phone);
-};
-
-const isEmailValid = (email) => {
-  const re =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
-};
-
-function showErrorMessage(element, message, status) {
-  let messagePlaceHolder = element.nextElementSibling;
-  if (!status) {
-    messagePlaceHolder.textContent = message;
-    messagePlaceHolder.classList.remove("success");
-    messagePlaceHolder.classList.add("error");
-  }
-  if (status) {
-    messagePlaceHolder.textContent = message;
-    messagePlaceHolder.classList.remove("error");
-    messagePlaceHolder.classList.add("success");
-  }
-}
-
-function verifyCompanyName() {
-  // let element = document.querySelector("#companyName");
-  let message;
-  let status;
-  let data = companyName.value;
-
-  // Case Empty
-  if (!isRequired(data)) {
-    message = "Company name can not be blank !";
-    status = isRequired(data);
-    showErrorMessage(companyName, message, status);
-    return status;
-  } else {
-    showErrorMessage(companyName, "", isRequired(data));
-  }
-
-  // Case Enough character
-  if (!isBetween(data.length, 8, 32)) {
-    message = "Company name must be at least 8 characters !";
-    status = isBetween(data.length, 8, 32);
-    showErrorMessage(companyName, message, status);
-    return status;
-  } else {
-    showErrorMessage(companyName, "", isBetween(data));
-  }
-
-  return true;
-}
-
-function verifyCompanyPhone() {
-  let message;
-  let status;
-  let data = companyPhone.value;
-
-  // Case empty
-  if (!isRequired(data)) {
-    message = "Company phone can not be blank !";
-    status = isRequired(data);
-    showErrorMessage(companyPhone, message, status);
-    return status;
-  } else {
-    showErrorMessage(companyPhone, "", isRequired(data));
-  }
-
-  // Case right format
-  if (!isPhoneValid(data)) {
-    message = "Invalid phone number !";
-    status = isPhoneValid(data);
-    showErrorMessage(companyPhone, message, status);
-    return status;
-  } else {
-    showErrorMessage(companyPhone, "", isPhoneValid(data));
-  }
-
-  return true;
-}
-
-function verifyCompanyEmail() {
-  let message;
-  let status;
-  let data = companyEmail.value;
-
-  // Case empty
-  if (!isRequired(data)) {
-    message = "Company email can not be blank !";
-    status = isRequired(data);
-    showErrorMessage(companyEmail, message, status);
-    return status;
-  } else {
-    showErrorMessage(companyEmail, "", isRequired(data));
-  }
-
-  // Case right format
-  if (!isEmailValid(data)) {
-    message = "Invalid email address !";
-    status = isEmailValid(data);
-    showErrorMessage(companyEmail, message, status);
-    return status;
-  }
-  else {
-    showErrorMessage(companyEmail, "", isEmailValid(data));
-  }
-
-  return true;
-}
+import { verifyName, verifyPhone, verifyEmail } from "./utils/index.js";
 
 function handleCreate(e) {
   e.preventDefault();
-  let isNameValid = verifyCompanyName();
-  let isPhoneValid = verifyCompanyPhone();
-  let isEmailValid = verifyCompanyEmail();
+  let isNameValid = verifyName(companyName, {
+    empty: "Company name can not be blank !",
+    longEnough: "Company name must be at least 8 characters !",
+  });
+  let isPhoneValid = verifyPhone(companyPhone, {
+    empty: "Company Phone can not be blank !",
+    invalid: "Invalid phone number !",
+  });
+  let isEmailValid = verifyEmail(companyEmail, {
+    empty: "Company Email can be not be blank !",
+    invalid: "Invalid email address !",
+  });
 
   if (isNameValid && isPhoneValid && isEmailValid) {
     form.submit();
@@ -154,15 +47,23 @@ form.addEventListener(
   debounce(function (e) {
     switch (e.target.id) {
       case "companyName":
-        verifyCompanyName();
+        verifyName(companyName, {
+          empty: "Company name can not be blank !",
+          longEnough: "Company name must be at least 8 characters !",
+        });
         break;
       case "companyPhone":
-        verifyCompanyPhone();
+        verifyPhone(companyPhone, {
+          empty: "Company Phone can not be blank !",
+          invalid: "Invalid phone number !",
+        });
         break;
       case "companyEmail":
-        verifyCompanyEmail();
+        verifyEmail(companyEmail, {
+          empty: "Company Email can be not be blank !",
+          invalid: "Invalid email address !",
+        });
         break;
     }
   })
 );
-

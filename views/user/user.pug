@@ -18,7 +18,7 @@ block content
         data-bs-toggle="modal"
         data-bs-target="#contactModal"
       ) Add User
-
+    div(class="alert alert-primary" id="operation-alert" role="alert")
     div(id="toolbar")
       button(id="remove" class="btn btn-danger" disabled)
         i(class="fa fa-trash")  Delete
@@ -53,7 +53,7 @@ block append scriptsbottom
   script(src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.js")
   script(src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table-locale-all.min.js")
   script(src="https://unpkg.com/bootstrap-table@1.21.2/dist/extensions/export/bootstrap-table-export.min.js")
-
+  script(type="module" src="/js/user.js")
   script.
     var $table = $("#table");
     var $remove = $("#remove");

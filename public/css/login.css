@@ -1,3 +1,11 @@
 .err-message{
     display: none;
 }
+
+.success{
+    display: none;
+  }
+
+.error{
+  margin-left: 25px;
+}
